@@ -64,6 +64,26 @@ class _CityPage extends State<CityPage> {
     }
     return [result, backGround];
   }
+
+  Icon weatherIcon(int weatherCode){
+    switch (weatherCode){
+      case 0:
+        return Icon(Icons.sunny, color: Colors.yellow,);
+      case 1 || 2 || 3:
+        return Icon(Icons.cloud, color: Colors.white);
+      case 45 || 48:
+        return Icon(Icons.foggy, color: Colors.white30);
+      case 51 || 53 || 55 || 61 || 63 || 65 || 66 || 67:
+        return Icon(Icons.water_drop, color: Colors.blueAccent);
+      case 56 || 57 || 71 || 73 || 75 || 77 || 80 || 81 || 82 || 85 || 86:
+        return Icon(Icons.cloudy_snowing, color: Colors.white);
+      case 95 || 96 || 99:
+        return Icon(Icons.thunderstorm, color: Colors.white30);
+      default:
+        return Icon(Icons.sunny_snowing);
+    }
+  }
+
   List minmax(List nums){
     double min = nums[0];
     double max = nums[0];
@@ -157,7 +177,7 @@ class _CityPage extends State<CityPage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20,0,8,0),
-                              child: Icon(Icons.sunny)
+                              child: weatherIcon(weather['current']['weather_code'])
                             ),
                             Text(
                               weatherDeducer(weather['current']['weather_code'])[0],
@@ -169,13 +189,16 @@ class _CityPage extends State<CityPage> {
                           ],
                         ),
                         SizedBox(
-                          height: 100,
+                          height: 60,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(20),
                            child: Text(
                              '5-Day Forecast'
                            ),
+                        ),
+                        Row(
+
                         ),
                         SizedBox(
                           width: double.infinity,
