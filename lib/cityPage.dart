@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -113,7 +111,7 @@ class _CityPage extends State<CityPage> {
   Icon weatherIcon(int weatherCode){
     switch (weatherCode){
       case 0:
-        return Icon(Icons.sunny, color: Colors.yellow,);
+        return Icon(Icons.sunny, color: Colors.yellow);
       case 1 || 2 || 3:
         return Icon(Icons.cloud, color: Colors.white);
       case 45 || 48:
@@ -129,7 +127,7 @@ class _CityPage extends State<CityPage> {
     }
   }
 
-  List minmax(List nums){
+  List minMax(List nums){
     double min = nums[0];
     double max = nums[0];
     for(int i = 0 ; i < nums.length ; i++){
@@ -142,8 +140,12 @@ class _CityPage extends State<CityPage> {
   }
 
   double isNull (var temp){
-    if (temp != null) return temp;
-    else return double.nan;
+    if (temp != null) {
+      return temp;
+    }
+    else {
+      return double.nan;
+    }
   }
 
   @override
@@ -157,7 +159,7 @@ class _CityPage extends State<CityPage> {
         Uri.parse('https://api.open-meteo.com/v1/forecast?'
             'latitude=${lat}&longitude=${lon}'
             '&current=weather_code%2Ctemperature_2m%2Crelative_humidity_2m%2Cis_day'
-            '&daily=temperature_2m_mean'
+            '&daily=temperature_2m_mean%2Cweather_code'
             '&forecast_days=5'),
       );
       print(jsonDecode(response.body));
@@ -242,8 +244,33 @@ class _CityPage extends State<CityPage> {
                              '5-Day Forecast'
                            ),
                         ),
-                        Row(
-
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30,0,10,0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Tooltip(
+                                message: weatherDeducer(weather['daily']['weather_code'][0])[0],
+                                child: weatherIcon(weather['daily']['weather_code'][0]),
+                              ),
+                              Tooltip(
+                                message: weatherDeducer(weather['daily']['weather_code'][1])[0],
+                                child: weatherIcon(weather['daily']['weather_code'][1]),
+                              ),
+                              Tooltip(
+                                message: weatherDeducer(weather['daily']['weather_code'][2])[0],
+                                child: weatherIcon(weather['daily']['weather_code'][2]),
+                              ),
+                              Tooltip(
+                                message: weatherDeducer(weather['daily']['weather_code'][3])[0],
+                                child: weatherIcon(weather['daily']['weather_code'][3]),
+                              ),
+                              Tooltip(
+                                message: weatherDeducer(weather['daily']['weather_code'][4])[0],
+                                child: weatherIcon(weather['daily']['weather_code'][4]),
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           width: double.infinity,
@@ -276,8 +303,8 @@ class _CityPage extends State<CityPage> {
                                     ),
                                   ),
                                 ),
-                                minY: minmax(temps)[0].floor() - (minmax(temps)[0].floor() % 10),
-                                maxY: minmax(temps)[1].ceil() + (10 - minmax(temps)[1].ceil() % 10),
+                                minY: minMax(temps)[0].floor() - (minMax(temps)[0].floor() % 10),
+                                maxY: minMax(temps)[1].ceil() + (10 - minMax(temps)[1].ceil() % 10),
                                 lineBarsData: [
                                   LineChartBarData(
                                     spots: [

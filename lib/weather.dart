@@ -29,30 +29,60 @@ class Weather extends StatelessWidget{
     switch (weatherCode){
       case 0:
         result = 'Clear sky';
-      case 1 || 2 || 3:
-        result = 'Mainly clear, partly cloudy, and overcast';
-      case 45 || 48:
-        result = 'Fog and depositing rime fog';
-      case 51 || 53 || 55:
-        result = 'Drizzle: Light, moderate, and dense intensity';
-      case 56 || 57:
-        result = 'Freezing Drizzle: Light and dense intensity';
-      case 61 || 63 || 65:
-        result = 'Rain: Slight, moderate and heavy intensity';
-      case 66 || 67:
-        result = 'Freezing Rain: Light and heavy intensity';
-      case 71 || 73 || 75:
-        result = 'Snow fall: Slight, moderate, and heavy intensity';
+      case 1:
+        result = 'Mainly clear';
+      case 2:
+        result = 'Partly cloudy';
+      case 3:
+        result = 'Overcast';
+      case 45:
+        result = 'Fog';
+      case 48:
+        result = 'Depositing rime fog';
+      case 51:
+        result = 'Light drizzle';
+      case 53:
+        result = 'Moderate drizzle';
+      case 55:
+        result = 'Intense drizzle';
+      case 56:
+        result = 'Light freezing drizzle';
+      case 57:
+        result = 'Intense freezing drizzle';
+      case 61:
+        result = 'Slight rain';
+      case 63:
+        result = 'Moderate rain';
+      case 65:
+        result = 'Heavy rain';
+      case 66:
+        result = 'Light freezing rain';
+      case 67:
+        result = 'Heavy freezing rain';
+      case 71:
+        result = 'Slight snow fall';
+      case 73:
+        result = 'Moderate snow fall';
+      case 75:
+        result = 'Heavy snow fall';
       case 77:
         result = 'Snow grains';
-      case 80 || 81 || 82:
-        result = 'Rain showers: Slight, moderate, and violent';
-      case 85 || 86:
-        result = 'Snow showers slight and heavy';
+      case 80:
+        result = 'Slight rain showers';
+      case 81:
+        result = 'Moderate rain showers';
+      case 82:
+        result = 'Violent rain showers';
+      case 85:
+        result = 'Slight snow showers';
+      case 86:
+        result = 'Heavy snow showers';
       case 95:
         result = 'Thunderstorm: Slight or moderate';
-      case 96 || 99:
-        result = 'Thunderstorm with slight and heavy hail';
+      case 96:
+        result = 'Slight thunderstorm';
+      case 99:
+        result = 'Heavy hail';
       default:
         result = 'Unknown';
     }
