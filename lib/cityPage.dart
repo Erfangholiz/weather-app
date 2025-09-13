@@ -22,41 +22,86 @@ class _CityPage extends State<CityPage> {
       case 0:
         result = 'Clear sky';
         backGround = 'assets/backgrounds/clear-sky.jpg';
-      case 1 || 2 || 3:
-        result = 'Mainly clear, partly cloudy, and overcast';
+      case 1:
+        result = 'Mainly clear';
         backGround = 'assets/backgrounds/mainly-clear-partly-cloudy.jpeg';
-      case 45 || 48:
-        result = 'Fog and depositing rime fog';
+      case 2:
+        result = 'Partly cloudy';
+        backGround = 'assets/backgrounds/partly-cloudy.jpg';
+      case 3:
+        result = 'Overcast';
+        backGround = 'assets/backgrounds/overcast.jpg';
+      case 45:
+        result = 'Fog';
         backGround = 'assets/backgrounds/fog.jpg';
-      case 51 || 53 || 55:
-        result = 'Drizzle: Light, moderate, and dense intensity';
+      case 48:
+        result = 'Depositing rime fog';
+        backGround = 'assets/backgrounds/depositing-rime-fog.jpg';
+      case 51:
+        result = 'Light drizzle';
         backGround = 'assets/backgrounds/drizzle.jpg';
-      case 56 || 57:
-        result = 'Freezing Drizzle: Light and dense intensity';
+      case 53:
+        result = 'Moderate drizzle';
+        backGround = 'assets/backgrounds/drizzle.jpg';
+      case 55:
+      result = 'Intense drizzle';
+      backGround = 'assets/backgrounds/drizzle.jpg';
+      case 56:
+        result = 'Light freezing drizzle';
         backGround = 'assets/backgrounds/freezing-drizzle.jpg';
-      case 61 || 63 || 65:
-        result = 'Rain: Slight, moderate and heavy intensity';
+      case 57:
+        result = 'Intense freezing drizzle';
+        backGround = 'assets/backgrounds/freezing-drizzle.jpg';
+      case 61:
+        result = 'Slight rain';
         backGround = 'assets/backgrounds/rain.jpg';
-      case 66 || 67:
-        result = 'Freezing Rain: Light and heavy intensity';
+      case 63:
+        result = 'Moderate rain';
+        backGround = 'assets/backgrounds/rain.jpg';
+      case 65:
+        result = 'Heavy rain';
+        backGround = 'assets/backgrounds/rain.jpg';
+      case 66:
+        result = 'Light freezing rain';
         backGround = 'assets/backgrounds/freezing-rain.jpg';
-      case 71 || 73 || 75:
-        result = 'Snow fall: Slight, moderate, and heavy intensity';
+      case 67:
+        result = 'Heavy freezing rain';
+        backGround = 'assets/backgrounds/freezing-rain.jpg';
+      case 71:
+        result = 'Slight snow fall';
+        backGround = 'assets/backgrounds/snow-fall.jpg';
+      case 73:
+        result = 'Moderate snow fall';
+        backGround = 'assets/backgrounds/snow-fall.jpg';
+      case 75:
+        result = 'Heavy snow fall';
         backGround = 'assets/backgrounds/snow-fall.jpg';
       case 77:
         result = 'Snow grains';
         backGround = 'assets/backgrounds/snow-grains.jpg';
-      case 80 || 81 || 82:
-        result = 'Rain showers: Slight, moderate, and violent';
+      case 80:
+        result = 'Slight rain showers';
         backGround = 'assets/backgrounds/rain-shower.jpg';
-      case 85 || 86:
-        result = 'Snow showers slight and heavy';
+      case 81:
+        result = 'Moderate rain showers';
+        backGround = 'assets/backgrounds/rain-shower.jpg';
+      case 82:
+        result = 'Violent rain showers';
+        backGround = 'assets/backgrounds/rain-shower.jpg';
+      case 85:
+        result = 'Slight snow showers';
+        backGround = 'assets/backgrounds/snow-showers.jpg';
+      case 86:
+        result = 'Heavy snow showers';
         backGround = 'assets/backgrounds/snow-showers.jpg';
       case 95:
         result = 'Thunderstorm: Slight or moderate';
         backGround = 'assets/backgrounds/thunderstorm.jpg';
-      case 96 || 99:
-        result = 'Thunderstorm with slight and heavy hail';
+      case 96:
+        result = 'Slight thunderstorm';
+        backGround = 'assets/backgrounds/thunderstorm-hail.jpg';
+      case 99:
+        result = 'Heavy hail';
         backGround = 'assets/backgrounds/thunderstorm-hail.jpg';
       default:
         result = 'Unknown';
