@@ -54,8 +54,8 @@ class _MapChoose extends State<MapChoose>{
           body: Column(
             children: [
               SizedBox(
-                width: 800,
-                height: 300,
+                width: double.infinity,
+                height: 500,
                 child: FlutterMap(
                   options: MapOptions(
                     initialCenter: LatLng(35.7, 51.3),
@@ -79,7 +79,7 @@ class _MapChoose extends State<MapChoose>{
                             point: _selectedPoint!,
                             width: 80,
                             height: 80,
-                            child: Icon(Icons.location_pin, color: Colors.red, size: 40),
+                            child: Icon(Icons.location_on_rounded, color: Colors.red, size: 40),
                           ),
                         ],
                       ),
@@ -104,6 +104,12 @@ class _MapChoose extends State<MapChoose>{
                       child: Text('Confirm'),
                     ),
                   ],
+                ),
+              ),
+              Text(
+                _cityName!=null? _cityName!:'Select City',
+                style: TextStyle(
+                  fontSize: 20,
                 ),
               ),
             ],

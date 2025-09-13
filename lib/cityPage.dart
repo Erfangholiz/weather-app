@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -20,46 +21,46 @@ class _CityPage extends State<CityPage> {
     switch (weatherCode){
       case 0:
         result = 'Clear sky';
-        backGround = 'https://i.redd.it/kth1hr4zsjea1.jpg';
+        backGround = 'assets/backgrounds/clear-sky.jpg';
       case 1 || 2 || 3:
         result = 'Mainly clear, partly cloudy, and overcast';
-        backGround = 'https://images.pexels.com/photos/53594/blue-clouds-day-fluffy-53594.jpeg';
+        backGround = 'assets/backgrounds/mainly-clear-partly-cloudy.jpeg';
       case 45 || 48:
         result = 'Fog and depositing rime fog';
-        backGround = 'https://www.wkbn.com/wp-content/uploads/sites/48/2022/11/fog-picture.jpg';
+        backGround = 'assets/backgrounds/fog.jpg';
       case 51 || 53 || 55:
         result = 'Drizzle: Light, moderate, and dense intensity';
-        backGround = 'https://img.freepik.com/premium-photo/black-white-photo-raindrops-window-rain-is-falling-light-drizzle-drops-are-scattered-across-glass_36682-5196.jpg';
+        backGround = 'assets/backgrounds/drizzle.jpg';
       case 56 || 57:
         result = 'Freezing Drizzle: Light and dense intensity';
-        backGround = 'vmcdn.ca/f/files/tbnewswatch/images/local-news/2017/april/ice-storm/freezing-rain.jpg';
+        backGround = 'assets/backgrounds/freezing-drizzle.jpg';
       case 61 || 63 || 65:
         result = 'Rain: Slight, moderate and heavy intensity';
-        backGround = 'https://republicaimg.nagariknewscdn.com/shared/web/uploads/media/EEWREmQMZPXnn1JvfDwoLHzDOdDdvfap3ZB1sQ5B.jpg';
+        backGround = 'assets/backgrounds/rain.jpg';
       case 66 || 67:
         result = 'Freezing Rain: Light and heavy intensity';
-        backGround = 'https://static.foxnews.com/foxnews.com/content/uploads/2020/01/Freezing-Rain-iStock-2.jpg';
+        backGround = 'assets/backgrounds/freezing-rain.jpg';
       case 71 || 73 || 75:
         result = 'Snow fall: Slight, moderate, and heavy intensity';
-        backGround = 'https://www.usatoday.com/gcdn/authoring/authoring-images/2024/10/17/USAT/75714706007-usatsi-24195665.jpg';
+        backGround = 'assets/backgrounds/snow-fall.jpg';
       case 77:
         result = 'Snow grains';
-        backGround = 'https://pbs.twimg.com/media/FNgGxCzVUAEoDhY.jpg';
+        backGround = 'assets/backgrounds/snow-grains.jpg';
       case 80 || 81 || 82:
         result = 'Rain showers: Slight, moderate, and violent';
-        backGround = 'https://republicaimg.nagariknewscdn.com/shared/web/uploads/media/EEWREmQMZPXnn1JvfDwoLHzDOdDdvfap3ZB1sQ5B.jpg';
+        backGround = 'assets/backgrounds/rain-shower.jpg';
       case 85 || 86:
         result = 'Snow showers slight and heavy';
-        backGround = 'https://www.usatoday.com/gcdn/authoring/authoring-images/2024/10/17/USAT/75714706007-usatsi-24195665.jpg';
+        backGround = 'assets/backgrounds/snow-showers.jpg';
       case 95:
         result = 'Thunderstorm: Slight or moderate';
-        backGround = 'https://media.13newsnow.com/assets/WVEC/images/e23dc125-7f4c-4783-8b28-925ec0d61d6f/e23dc125-7f4c-4783-8b28-925ec0d61d6f_1140x641.jpg';
+        backGround = 'assets/backgrounds/thunderstorm.jpg';
       case 96 || 99:
         result = 'Thunderstorm with slight and heavy hail';
-        backGround = 'https://media.13newsnow.com/assets/WVEC/images/e23dc125-7f4c-4783-8b28-925ec0d61d6f/e23dc125-7f4c-4783-8b28-925ec0d61d6f_1140x641.jpg';
+        backGround = 'assets/backgrounds/thunderstorm-hail.jpg';
       default:
         result = 'Unknown';
-        backGround = '';
+        backGround = 'assets/backgrounds/michael-stevens.jpg';
     }
     return [result, backGround];
   }
@@ -151,15 +152,21 @@ class _CityPage extends State<CityPage> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20,0,0,0),
-                          child: Text(
-                            weatherDeducer(weather['current']['weather_code'])[0],
-                            textAlign: TextAlign.right,
-                            style: TextStyle(
-                              fontSize: 25,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20,0,8,0),
+                              child: Icon(Icons.sunny)
                             ),
-                          ),
+                            Text(
+                              weatherDeducer(weather['current']['weather_code'])[0],
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 100,
@@ -224,17 +231,18 @@ class _CityPage extends State<CityPage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(15),
-                              child: SizedBox(
-                                height: 250,
-                                width: 250,
-                                child: Column(
-                                  children: [
-                                    Text('Humidity'),
-                                    Text(weather['current']['relative_humidity_2m'].toString() + '%'),
-                                  ],
+                              child: Container(
+                                  width: 100,
+                                  height: 100,
+                                  color: Colors.white,
+                                  child: Column(
+                                    children: [
+                                      Text('Humidity'),
+                                      Text(weather['current']['relative_humidity_2m'].toString() + '%'),
+                                    ],
+                                  ),
                                 )
                               ),
-                            ),
                           ],
                         )
                       ],
