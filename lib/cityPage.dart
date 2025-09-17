@@ -350,6 +350,18 @@ class _CityPage extends State<CityPage> {
               }
             },
           ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            child: Text(
+              '↶',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
     );
   }

@@ -92,12 +92,6 @@ class _MapChoose extends State<MapChoose>{
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      onPressed: (){
-                        Navigator.pop(context);
-                      },
-                      child: Text('Cancel'),
-                    ),
-                    ElevatedButton(
                       onPressed: _cityName == null ? null : (){
                         Navigator.pop(context, CitySelection(_cityName!, _selectedPoint!));
                       },
@@ -113,6 +107,18 @@ class _MapChoose extends State<MapChoose>{
                 ),
               ),
             ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: (){
+              Navigator.pop(context);
+            },
+            child: Text(
+              '↶',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         )
     );

@@ -36,6 +36,7 @@ class _MyApp extends State<MyApp>{
   Widget build(BuildContext context) {
     const String appTitle = 'Weather';
     final coordsBox = Hive.box('coordsBox');
+    const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
     if(coords.entries.isEmpty){
       return MaterialApp(
@@ -52,8 +53,16 @@ class _MyApp extends State<MyApp>{
           ),
           body: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  weekDays[DateTime
+                      .now()
+                      .weekday - 1],
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 Text(
                   '${DateTime
                       .now()
@@ -118,6 +127,14 @@ class _MyApp extends State<MyApp>{
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Text(
+                    weekDays[DateTime
+                        .now()
+                        .weekday - 1],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Text(
                     '${DateTime
                         .now()
