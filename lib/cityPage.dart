@@ -93,10 +93,10 @@ class _CityPage extends State<CityPage> {
         result = 'Heavy snow showers';
         backGround = 'assets/backgrounds/snow-showers.jpg';
       case 95:
-        result = 'Thunderstorm: Slight or moderate';
+        result = 'Slight thunderstorm';
         backGround = 'assets/backgrounds/thunderstorm.jpg';
       case 96:
-        result = 'Slight thunderstorm';
+        result = 'Moderate thunderstorm';
         backGround = 'assets/backgrounds/thunderstorm-hail.jpg';
       case 99:
         result = 'Heavy hail';
@@ -245,7 +245,7 @@ class _CityPage extends State<CityPage> {
                            ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(30,0,10,0),
+                          padding: const EdgeInsets.fromLTRB(30,0,10,2),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
