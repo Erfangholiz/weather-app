@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:weather_app/widgets/weather_card.dart';
 import 'package:weather_app/widgets/weather_chart.dart';
+import 'package:weather_app/widgets/weather_icon.dart';
 
 class CityPage extends StatefulWidget{
   const CityPage({super.key});
@@ -111,50 +110,9 @@ class _CityPage extends State<CityPage> {
     return [result, backGround];
   }
 
-  Icon weatherIcon(int weatherCode){
-    switch (weatherCode){
-      case 0:
-        return Icon(Icons.sunny, color: Colors.yellow);
-      case 1 || 2 || 3:
-        return Icon(Icons.cloud, color: Colors.white);
-      case 45 || 48:
-        return Icon(Icons.foggy, color: Colors.white30);
-      case 51 || 53 || 55 || 61 || 63 || 65 || 66 || 67:
-        return Icon(Icons.water_drop, color: Colors.blueAccent);
-      case 56 || 57 || 71 || 73 || 75 || 77 || 80 || 81 || 82 || 85 || 86:
-        return Icon(Icons.cloudy_snowing, color: Colors.white);
-      case 95 || 96 || 99:
-        return Icon(Icons.thunderstorm, color: Colors.white30);
-      default:
-        return Icon(Icons.sunny_snowing);
-    }
-  }
-
-  List minMax(List nums){
-    double min = nums[0];
-    double max = nums[0];
-    for(int i = 0 ; i < nums.length ; i++){
-      if(nums[i] != null) {
-        if (min > nums[i]) min = nums[i];
-        if (max < nums[i]) max = nums[i];
-      }
-    }
-    return [min, max];
-  }
-
-  double isNull (var temp){
-    if (temp != null) {
-      return temp;
-    }
-    else {
-      return double.nan;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final cityData = ModalRoute.of(context)!.settings.arguments as List;
-    String city = cityData[0];
     double lat = cityData[1];
     double lon = cityData[2];
     Future getWeather() async{
@@ -165,7 +123,6 @@ class _CityPage extends State<CityPage> {
             '&daily=temperature_2m_mean%2Cweather_code'
             '&forecast_days=5'),
       );
-      print(jsonDecode(response.body));
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
       } else {
