@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:weather_app/widgets/weather_card.dart';
+import 'package:weather_app/widgets/weather_chart.dart';
 
 class CityPage extends StatefulWidget{
   const CityPage({super.key});
@@ -196,6 +199,7 @@ class _CityPage extends State<CityPage> {
               else if (snapshot.hasData) {
                 final weather = snapshot.data!;
                 List temps = weather['daily']['temperature_2m_mean'];
+                List codes = weather['daily']['weather_code'];
                 return Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -238,107 +242,11 @@ class _CityPage extends State<CityPage> {
                         SizedBox(
                           height: 60,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                           child: Text(
-                             '5-Day Forecast'
-                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(30,0,10,2),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Tooltip(
-                                message: weatherDeducer(weather['daily']['weather_code'][0])[0],
-                                child: weatherIcon(weather['daily']['weather_code'][0]),
-                              ),
-                              Tooltip(
-                                message: weatherDeducer(weather['daily']['weather_code'][1])[0],
-                                child: weatherIcon(weather['daily']['weather_code'][1]),
-                              ),
-                              Tooltip(
-                                message: weatherDeducer(weather['daily']['weather_code'][2])[0],
-                                child: weatherIcon(weather['daily']['weather_code'][2]),
-                              ),
-                              Tooltip(
-                                message: weatherDeducer(weather['daily']['weather_code'][3])[0],
-                                child: weatherIcon(weather['daily']['weather_code'][3]),
-                              ),
-                              Tooltip(
-                                message: weatherDeducer(weather['daily']['weather_code'][4])[0],
-                                child: weatherIcon(weather['daily']['weather_code'][4]),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 250,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,20,0),
-                            child: LineChart(
-                              LineChartData(
-                                titlesData: FlTitlesData(
-                                  rightTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                      showTitles: false,
-                                    )
-                                  ),
-                                  topTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                      showTitles: false,
-                                    ),
-                                  ),
-                                  bottomTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                      showTitles: true,
-                                      interval: 1,
-                                      getTitlesWidget: (value, meta) {
-                                      if (value % 1 == 0) {
-                                        return Text(value.toInt().toString());
-                                      }
-                                      return Container();
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                minY: minMax(temps)[0].floor() - (minMax(temps)[0].floor() % 10),
-                                maxY: minMax(temps)[1].ceil() + (10 - minMax(temps)[1].ceil() % 10),
-                                lineBarsData: [
-                                  LineChartBarData(
-                                    spots: [
-                                      FlSpot(0, isNull(temps[0])),
-                                      FlSpot(1, isNull(temps[1])),
-                                      FlSpot(2, isNull(temps[2])),
-                                      FlSpot(3, isNull(temps[3])),
-                                      FlSpot(4, isNull(temps[4])),
-                                    ],
-                                    isCurved: true,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        weatherChart(temps, codes),
                         SizedBox(height: 50, width: double.infinity,),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  color: Colors.white,
-                                  child: Column(
-                                    children: [
-                                      Text('Humidity'),
-                                      Text(weather['current']['relative_humidity_2m'].toString() + '%'),
-                                    ],
-                                  ),
-                                )
-                              ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30,0,0,0),
+                          child: weatherCard('Humidity', weather['current']['relative_humidity_2m'].toString() + '%'),
                         )
                       ],
                     ),

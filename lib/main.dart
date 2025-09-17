@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/weather.dart';
+import 'package:weather_app/widgets/weather.dart';
 import 'package:weather_app/choose.dart';
-import 'package:weather_app/cityPage.dart';
+import 'package:weather_app/city_page.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
