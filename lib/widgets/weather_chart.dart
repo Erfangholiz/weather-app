@@ -9,6 +9,8 @@ class weatherChart extends StatelessWidget {
 
   const weatherChart(this.temps, this.codes);
 
+
+
   List minMax(List nums){
     double min = nums[0];
     double max = nums[0];
