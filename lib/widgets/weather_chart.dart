@@ -28,6 +28,8 @@ class weatherChart extends StatelessWidget {
       return double.nan;
     }
   }
+
+
   List weatherDeducer (int weatherCode){
     String backGround;
     String result;
