@@ -43,6 +43,7 @@ dependencies:
   url_launcher: ^6.3.2
   sqflite: ^2.4.2
   sqflite_common_ffi: ^2.3.6
+  icons_plus: ^5.0.0
 
 dev_dependencies:
   flutter_test:

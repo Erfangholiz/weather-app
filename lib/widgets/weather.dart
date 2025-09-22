@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:ui';
 
 
 class Weather extends StatelessWidget{
@@ -78,11 +79,11 @@ class Weather extends StatelessWidget{
       case 86:
         result = 'Heavy snow showers';
       case 95:
-        result = 'Thunderstorm: Slight or moderate';
+        result = 'Thunderstorm';
       case 96:
-        result = 'Slight thunderstorm';
+        result = 'Thunderstorm with slight hail';
       case 99:
-        result = 'Heavy hail';
+        result = 'Thunderstorm with heavy hail';
       default:
         result = 'Unknown';
     }
@@ -91,53 +92,71 @@ class Weather extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: FutureBuilder(
-        future: getWeather(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          }
-          else if (snapshot.hasData) {
-            final weather = snapshot.data!;
-            print(weather);
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  city!,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
-                ),
-                Column(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(40),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.6),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.center,
+              colors: [Colors.white30, Colors.white10],
+            ),
+            image: DecorationImage(
+              image: NetworkImage(
+                'https://upload.wikimedia.org/wikipedia/commons/9/9a/512x512_Dissolve_Noise_Texture.png',),
+              fit: BoxFit.cover,
+              opacity: 0.01,
+            ),
+          ),
+          child: FutureBuilder(
+            future: getWeather(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              else if (snapshot.hasError) {
+                return Center(child: Text("Error: ${snapshot.error}"));
+              }
+              else if (snapshot.hasData) {
+                final weather = snapshot.data!;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      weatherDeducer(weather['current']['weather_code']),
-                      textAlign: TextAlign.right,
+                      city!,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
-                    Text(
-                      'Temp: ${weather['current']['temperature_2m']}°',
-                      textAlign: TextAlign.right,
-                    ),
-                    Text(
-                      'Humidity: %${weather['current']['relative_humidity_2m']}',
-                      textAlign: TextAlign.right,
+                    Column(
+                      children: [
+                        Text(
+                          weatherDeducer(weather['current']['weather_code']),
+                          textAlign: TextAlign.right,
+                        ),
+                        Text(
+                          'Temp: ${weather['current']['temperature_2m']}°',
+                          textAlign: TextAlign.right,
+                        ),
+                        Text(
+                          'Humidity: %${weather['current']['relative_humidity_2m']}',
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ],
-            );
-          }
-          else {
-            return Center(child: Text("No data"));
-          }
-        },
+                );
+              }
+              else {
+                return Center(child: Text("No data"));
+              }
+            },
+          ),
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'dart:ui';
 import 'package:weather_app/widgets/weather_icon.dart';
 
 class weatherChart extends StatelessWidget {
@@ -128,105 +129,127 @@ class weatherChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text(
-              '5-Day Forecast'
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(
+                'https://upload.wikimedia.org/wikipedia/commons/9/9a/512x512_Dissolve_Noise_Texture.png',),
+              fit: BoxFit.cover,
+              opacity: 0.01,
+            ),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.white30, Colors.white10],
+            ),
+            color: Colors.white.withOpacity(0.2),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30,0,10,2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Tooltip(
-                message: weatherDeducer(codes[0])[0],
-                child: weatherIcon(codes[0]),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                    '5-Day Forecast'
+                ),
               ),
-              Tooltip(
-                message: weatherDeducer(codes[1])[0],
-                child: weatherIcon(codes[1]),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30,0,10,8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Tooltip(
+                      message: weatherDeducer(codes[0])[0],
+                      child: weatherIcon(codes[0]),
+                    ),
+                    Tooltip(
+                      message: weatherDeducer(codes[1])[0],
+                      child: weatherIcon(codes[1]),
+                    ),
+                    Tooltip(
+                      message: weatherDeducer(codes[2])[0],
+                      child: weatherIcon(codes[2]),
+                    ),
+                    Tooltip(
+                      message: weatherDeducer(codes[3])[0],
+                      child: weatherIcon(codes[3]),
+                    ),
+                    Tooltip(
+                      message: weatherDeducer(codes[4])[0],
+                      child: weatherIcon(codes[4]),
+                    ),
+                  ],
+                ),
               ),
-              Tooltip(
-                message: weatherDeducer(codes[2])[0],
-                child: weatherIcon(codes[2]),
-              ),
-              Tooltip(
-                message: weatherDeducer(codes[3])[0],
-                child: weatherIcon(codes[3]),
-              ),
-              Tooltip(
-                message: weatherDeducer(codes[4])[0],
-                child: weatherIcon(codes[4]),
+              SizedBox(
+                width: double.infinity,
+                height: 250,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0,0,20,0),
+                  child: LineChart(
+                    LineChartData(
+                      titlesData: FlTitlesData(
+                        rightTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: false,
+                            )
+                        ),
+                        topTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          ),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            interval: 1,
+                            getTitlesWidget: (value, meta) {
+                              if (value % 1 == 0) {
+                                return Text(value.toInt().toString());
+                              }
+                              return Container();
+                            },
+                          ),
+                        ),
+                      ),
+                      minY: minMax(minTemps)[0].floor() - (minMax(minTemps)[0].floor() % 10),
+                      maxY: minMax(maxTemps)[1].ceil() + (10 - minMax(maxTemps)[1].ceil() % 10),
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: [
+                            FlSpot(0, isNull(minTemps[0])),
+                            FlSpot(1, isNull(minTemps[1])),
+                            FlSpot(2, isNull(minTemps[2])),
+                            FlSpot(3, isNull(minTemps[3])),
+                            FlSpot(4, isNull(minTemps[4])),
+                          ],
+                          color: Colors.blue,
+                          isCurved: true,
+                        ),
+                        LineChartBarData(
+                          spots: [
+                            FlSpot(0, isNull(maxTemps[0])),
+                            FlSpot(1, isNull(maxTemps[1])),
+                            FlSpot(2, isNull(maxTemps[2])),
+                            FlSpot(3, isNull(maxTemps[3])),
+                            FlSpot(4, isNull(maxTemps[4])),
+                          ],
+                          color: Colors.red,
+                          isCurved: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
         ),
-        SizedBox(
-          width: double.infinity,
-          height: 250,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0,0,20,0),
-            child: LineChart(
-              LineChartData(
-                titlesData: FlTitlesData(
-                  rightTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: false,
-                      )
-                  ),
-                  topTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: false,
-                    ),
-                  ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      interval: 1,
-                      getTitlesWidget: (value, meta) {
-                        if (value % 1 == 0) {
-                          return Text(value.toInt().toString());
-                        }
-                        return Container();
-                      },
-                    ),
-                  ),
-                ),
-                minY: minMax(minTemps)[0].floor() - (minMax(minTemps)[0].floor() % 10),
-                maxY: minMax(maxTemps)[1].ceil() + (10 - minMax(maxTemps)[1].ceil() % 10),
-                lineBarsData: [
-                  LineChartBarData(
-                    spots: [
-                      FlSpot(0, isNull(minTemps[0])),
-                      FlSpot(1, isNull(minTemps[1])),
-                      FlSpot(2, isNull(minTemps[2])),
-                      FlSpot(3, isNull(minTemps[3])),
-                      FlSpot(4, isNull(minTemps[4])),
-                    ],
-                    color: Colors.blue,
-                    isCurved: true,
-                  ),
-                  LineChartBarData(
-                    spots: [
-                      FlSpot(0, isNull(maxTemps[0])),
-                      FlSpot(1, isNull(maxTemps[1])),
-                      FlSpot(2, isNull(maxTemps[2])),
-                      FlSpot(3, isNull(maxTemps[3])),
-                      FlSpot(4, isNull(maxTemps[4])),
-                    ],
-                    color: Colors.red,
-                    isCurved: true,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

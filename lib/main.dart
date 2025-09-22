@@ -115,75 +115,80 @@ class _MyApp extends State<MyApp>{
         ),
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            appTitle,
-          ),
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    weekDays[DateTime
-                        .now()
-                        .weekday - 1],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${DateTime
-                        .now()
-                        .year} / ${DateTime
-                        .now()
-                        .month} / ${DateTime
-                        .now()
-                        .day
-                        .toString()}',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                ],
-              ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage('assets/backgrounds/main.jpg'),
+              fit: BoxFit.cover,
+              opacity: 0.3,
             ),
-            ...coords.entries.map((data){
-            return GestureDetector(
-              onTap: (){
-                Navigator.pushNamed(context, '/citypage', arguments: [data.key, data.value[0], data.value[1]]);
-              },
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Weather(city: data.key, lat: data.value[0], lon: data.value[1])
-                  ),
-                  TextButton(
-                    onPressed: (){
-                      setState(() {
-                        coordsBox.delete(data.key);
-                        coords.remove(data.key);
-                      });
-                    },
-                    child: Text(
-                      '✖',
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      weekDays[DateTime
+                          .now()
+                          .weekday - 1],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.red,
                       ),
                     ),
-                  ),
-                ],
+                    Text(
+                      '${DateTime
+                          .now()
+                          .year} / ${DateTime
+                          .now()
+                          .month} / ${DateTime
+                          .now()
+                          .day
+                          .toString()}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+          
+                  ],
+                ),
               ),
-            );
-            }),
-          ],
+              ...coords.entries.map((data){
+              return GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, '/citypage', arguments: [data.key, data.value[0], data.value[1]]);
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Weather(city: data.key, lat: data.value[0], lon: data.value[1])
+                    ),
+                    TextButton(
+                      onPressed: (){
+                        setState(() {
+                          coordsBox.delete(data.key);
+                          coords.remove(data.key);
+                        });
+                      },
+                      child: Text(
+                        'x',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+              }),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {

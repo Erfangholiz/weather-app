@@ -24,7 +24,7 @@ class _CityPage extends State<CityPage> {
         backGround = 'assets/backgrounds/clear-sky.jpg';
       case 1:
         result = 'Mainly clear';
-        backGround = 'assets/backgrounds/mainly-clear-partly-cloudy.jpeg';
+        backGround = 'assets/backgrounds/mainly-clear.jpeg';
       case 2:
         result = 'Partly cloudy';
         backGround = 'assets/backgrounds/partly-cloudy.jpg';
@@ -139,11 +139,6 @@ class _CityPage extends State<CityPage> {
         ),
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            cityData[0],
-          ),
-        ),
         body: FutureBuilder(
             future: getWeather(),
             builder: (context, snapshot) {
@@ -171,6 +166,16 @@ class _CityPage extends State<CityPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15,15,0,0),
+                          child: Text(
+                            cityData[0],
+                            style: TextStyle(
+                              fontSize: 50,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15,0,0,0),
                           child: Text(
@@ -209,10 +214,20 @@ class _CityPage extends State<CityPage> {
                             children: [
                               weatherCard('Humidity', '${weather['current']['relative_humidity_2m'].toString()}%'),
                               weatherCard('Real Feel', '${weather['current']['apparent_temperature'].toString()}°'),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 30, width: double.infinity,),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30,0,30,0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              weatherCard('UV Index', '${weather['current']['uv_index'].toString()}'),
                               weatherCard('UV Index', '${weather['current']['uv_index'].toString()}'),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
