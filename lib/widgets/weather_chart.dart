@@ -4,12 +4,11 @@ import 'package:weather_app/widgets/weather_icon.dart';
 
 class weatherChart extends StatelessWidget {
 
-  final List temps;
+  final List minTemps;
+  final List maxTemps;
   final List codes;
 
-  const weatherChart(this.temps, this.codes);
-
-
+  const weatherChart(this.minTemps, this.maxTemps, this.codes);
 
   List minMax(List nums){
     double min = nums[0];
@@ -197,17 +196,29 @@ class weatherChart extends StatelessWidget {
                     ),
                   ),
                 ),
-                minY: minMax(temps)[0].floor() - (minMax(temps)[0].floor() % 10),
-                maxY: minMax(temps)[1].ceil() + (10 - minMax(temps)[1].ceil() % 10),
+                minY: minMax(minTemps)[0].floor() - (minMax(minTemps)[0].floor() % 10),
+                maxY: minMax(maxTemps)[1].ceil() + (10 - minMax(maxTemps)[1].ceil() % 10),
                 lineBarsData: [
                   LineChartBarData(
                     spots: [
-                      FlSpot(0, isNull(temps[0])),
-                      FlSpot(1, isNull(temps[1])),
-                      FlSpot(2, isNull(temps[2])),
-                      FlSpot(3, isNull(temps[3])),
-                      FlSpot(4, isNull(temps[4])),
+                      FlSpot(0, isNull(minTemps[0])),
+                      FlSpot(1, isNull(minTemps[1])),
+                      FlSpot(2, isNull(minTemps[2])),
+                      FlSpot(3, isNull(minTemps[3])),
+                      FlSpot(4, isNull(minTemps[4])),
                     ],
+                    color: Colors.blue,
+                    isCurved: true,
+                  ),
+                  LineChartBarData(
+                    spots: [
+                      FlSpot(0, isNull(maxTemps[0])),
+                      FlSpot(1, isNull(maxTemps[1])),
+                      FlSpot(2, isNull(maxTemps[2])),
+                      FlSpot(3, isNull(maxTemps[3])),
+                      FlSpot(4, isNull(maxTemps[4])),
+                    ],
+                    color: Colors.red,
                     isCurved: true,
                   ),
                 ],

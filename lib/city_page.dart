@@ -119,8 +119,8 @@ class _CityPage extends State<CityPage> {
       final response = await http.get(
         Uri.parse('https://api.open-meteo.com/v1/forecast?'
             'latitude=${lat}&longitude=${lon}'
-            '&current=weather_code%2Ctemperature_2m%2Crelative_humidity_2m%2Cis_day'
-            '&daily=temperature_2m_mean%2Cweather_code'
+            '&current=weather_code%2Ctemperature_2m%2Crelative_humidity_2m%2Cis_day%2Capparent_temperature%2Cuv_index'
+            '&daily=temperature_2m_min%2Ctemperature_2m_max%2Cweather_code'
             '&forecast_days=5'),
       );
       if (response.statusCode == 200) {
@@ -155,7 +155,8 @@ class _CityPage extends State<CityPage> {
               }
               else if (snapshot.hasData) {
                 final weather = snapshot.data!;
-                List temps = weather['daily']['temperature_2m_mean'];
+                List minTemps = weather['daily']['temperature_2m_min'];
+                List maxTemps = weather['daily']['temperature_2m_max'];
                 List codes = weather['daily']['weather_code'];
                 return Container(
                   width: double.infinity,
@@ -199,11 +200,18 @@ class _CityPage extends State<CityPage> {
                         SizedBox(
                           height: 60,
                         ),
-                        weatherChart(temps, codes),
+                        weatherChart(minTemps, maxTemps, codes),
                         SizedBox(height: 50, width: double.infinity,),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(30,0,0,0),
-                          child: weatherCard('Humidity', weather['current']['relative_humidity_2m'].toString() + '%'),
+                          padding: const EdgeInsets.fromLTRB(30,0,30,0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              weatherCard('Humidity', '${weather['current']['relative_humidity_2m'].toString()}%'),
+                              weatherCard('Real Feel', '${weather['current']['apparent_temperature'].toString()}°'),
+                              weatherCard('UV Index', '${weather['current']['uv_index'].toString()}'),
+                            ],
+                          ),
                         )
                       ],
                     ),
